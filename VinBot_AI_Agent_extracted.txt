@@ -1,0 +1,97 @@
+VINBOT
+AI Agent Hỗ Trợ Hậu Mãi Xe Máy Điện VinFast
+Tra cứu bảo hành
+Chẩn đoán Telemetry
+Đặt lịch dịch vụ
+Tìm xưởng gần nhất
+• Khách hàng khó tự xác định xe và pin 
+còn bảo hành hay không.
+• Các câu hỏi policy lặp lại, phụ thuộc 
+nhiều vào tư vấn thủ công.
+• Dữ liệu kỹ thuật (mã lỗi) khó tổng hợp 
+và phản hồi nhanh.
+• Luồng tìm xưởng và chốt lịch hẹn chưa 
+liền mạch.
+• Hệ quả: Phản hồi chậm, trải nghiệm 
+người dùng không nhất quán.
+Vấn đề thực tế
+
+Giao diện & API
+Web chat chọn xe trực 
+quan. Backend 
+FastAPI đảm bảo tốc 
+độ phản hồi cao.
+AI Core
+Tích hợp OpenAI 
+Function Calling để tự 
+động gọi chính xác 
+các tool nghiệp vụ.
+Dữ liệu chuẩn
+Mô phỏng thực tế 6 
+dòng xe, nhiều xưởng 
+dịch vụ, cùng policy & 
+lịch bảo dưỡng.
+Giải pháp: VinBot AI Agent
+
+Auto (Tự động hóa)
+Aug (AI Tăng cường)
+• Tra cứu bảo hành xe và pin theo ID.
+• Chẩn đoán sơ bộ từ ODO, SOH(tình 
+xe), mã lỗi.
+• Tự động tìm xưởng và giữ slot trống.
+• AI hỗ trợ đề xuất, có kiểm soát 
+(guardrails).
+• Không cam kết tài chính/lỗi miễn phí 
+sai phạm vi.
+• Chuyển hotline 1900 23 23 89 khi phức tạp.
+Chiến lược Auto & Aug
+
+1. Chọn Xe
+Hỏi bảo hành xe
+lookup_warranty
+2. Policy & Lỗi
+Quyền lợi & Chẩn đoán
+diagnose_telemetry
+3. Tìm Xưởng
+Xưởng gần & Giờ 
+trống
+find_service_center
+4. Đặt Lịch
+Giữ slot & Xác nhận
+create_appointment
+Luồng Demo End-to-End
+Booking State Machine
+Luồng trạng thái: AVAILABLE → 
+PENDING → CONFIRMED.
+Giữ chỗ an toàn: Slot được khóa ở 
+trạng thái PENDING trong 5 phút.
+TTL Worker: Tự động nhả slot về 
+AVAILABLE nếu không được xác nhận 
+kịp.
+Hiệu quả: Tránh xung đột lịch, đảm 
+bảo tính nhất quán khi có nhiều yêu 
+cầu.
+
+Đáp ứng: 3 nhóm nhu cầu cốt lõi (bảo hành, policy, đặt lịch).
+Trả lời tiếng Việt có cấu trúc, bám sát dữ liệu và fact hệ thống (Pin 8 năm, xe 6 
+năm).
+Trải nghiệm mượt mà: Luồng từ tư vấn đến hành động booking được hoàn tất 
+liền mạch trong một phiên chat.
+Kết quả đạt được
+1. Nghiệp vụ Thanh toán (Payment Processing)
+2. Hệ thống Xác thực (Authentication)
+Giới hạn Phạm vi Dự án (Project Out-of-Scope)
+● Trạng thái dừng: Hệ thống chỉ thực hiện tới bước Xác nhận lịch hẹn (Confirmed).
+● Loại trừ: Không xử lý thanh toán chi phí sửa chữa ngoài bảo hành.
+● Công nghệ: Chưa tích hợp các cổng thanh toán trực tuyến như VNPay, Momo.
+● Cơ chế: Sử dụng giả định người dùng đã đăng nhập hệ thống (ID: U_VIN_001).
+● Loại trừ: Không triển khai các luồng Đăng ký, Đăng nhập, bảo mật 2 lớp (2FA) hoặc các tính năng 
+Quản lý tài khoản phức tạp.
+3. Nền tảng Triển khai (Platform)
+4. Khả năng Tương tác (Interaction)
+Giới hạn Phạm vi Dự án (Project Out-of-Scope)
+● Trọng tâm: Tập trung hoàn thiện giao diện Web Chat và xử lý Backend logic.
+● Loại trừ: Không phát triển ứng dụng di động bản địa (Native Mobile App) trên Android hay iOS.
+● Phương thức: Chỉ hỗ trợ tương tác qua dữ liệu dạng Văn bản (Text-based).
+● Loại trừ: Chưa hỗ trợ xử lý Đa phương thức (Multimodal) như nhận diện hình ảnh linh kiện hay 
+chuyển đổi giọng nói thành văn bản (Voice-to-text).
